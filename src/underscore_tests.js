@@ -57,53 +57,183 @@ var _ = { };
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
+
+      for(var prop in collection){
+
+        iterator(collection[prop],prop,collection);
+
+      }
+
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
-  };
+
+    var count = 0;
+          for (var i = 0; i < array.length; i++) {
+
+            if (target === array[i]) {
+
+              return i;
+
+            }
+            else{
+              count++;
+              console.log(count);
+              if(count === array.length){
+              	return -1;
+               }
+            }
+          }
+    }
 
   // Return all elements of an array that pass a truth test ('iterator' function argument)
   _.filter = function(collection, iterator) {
+
+    var trueArr = [];
+
+    for (var prop in collection){
+
+        if (iterator(collection[prop])){
+
+          trueArr.push(collection[prop]);
+
+        }
+
+    }
+    return trueArr;
   };
 
   // Return all elements of an array that don't pass a truth test (the 'iterator' function argument)
   _.reject = function(collection, iterator) {
+
+    var falseArr = [];
+
+    for(var prop in collection){
+
+        if (!iterator(collection[prop])){
+
+            falseArr.push(collection[prop]);
+
+        }
+
+    }
+    return falseArr;
   };
+
+
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-  };
+
+    var uniqArr = [];
+
+        for (var i = 0; i < array.length; i++) {
+
+              if (array.indexOf(array[i]) === i) {
+
+                  uniqArr.push(array[i]);
+
+        }
+
+      }
+      return uniqArr;
+    }
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
+
+    var returnArr = [];
+
+    for (var i = 0; i < array.length; i++) {
+
+        returnArr.push(iterator(array[i]));
+
+
+    }
+    return returnArr;
   };
 
   // Takes an array of objects and returns and array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
-  _.pluck = function(array, propertyName) {
+  _.pluck = function(array, propertyName){
+
+  var propArr = [];
+
+  for (var i = 0; i < array.length; i++) {
+
+        propArr.push(array[i][propertyName]);
+
+  }
+return propArr;
   };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
+
+
+      //Need to check whether methodName is string or function
+      //if string run my code below
+      //if function need to for loop through list and run example fn.call(this,args)
+
+      // fn.call(this, args)
+      // Array.prototype.sort().call
+
+      for (var i = 0; i < list.length; i++) {
+        var thing = list[i];
+
+        thing[methodName](args);
+      }
+      return list;
   };
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
   _.reduce = function(collection, iterator, initialValue) {
+
+    for(var prop in collection){
+
+      var previousValue = 0;
+      return previousValue +=  iterator(previousValue,prop);
+
+
+    }
+
   };
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
+
+    for(var prop in collection){
+        if(collection[prop] === target){
+
+          return true;
+        }
+        else if (!collection[prop] === target){
+
+          return false;
+        }
+    }
+
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+      var i=0;
+      for(var prop in collection){
+          i++
+          if (collection[prop] && i === collection.length){
+              return true;
+          }
+          else {
+            return false;
+          }
+      }
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
